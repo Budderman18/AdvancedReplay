@@ -97,7 +97,13 @@ public class SerializableItemStack implements Serializable {
 	}
 
 	public ItemStack toItemStack() {
-		ItemStack stack = ItemStack.deserialize(this.itemStack);
+		ItemStack stack = null;
+		try {
+			stack = ItemStack.deserialize(this.itemStack);
+		}
+		catch (IllegalArgumentException ex) {
+			stack = new ItemStack(Material.AIR, 1);
+		}
 		if (this.hasEnchantment) stack.addUnsafeEnchantment(EnchantmentBridge.UNBREAKING.toEnchantment(), 1);
 		
 		if (this.hasColor) {
