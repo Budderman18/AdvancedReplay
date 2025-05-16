@@ -137,9 +137,10 @@ public class SerializableItemStack implements Serializable {
 		if (block && stack.getType() == Material.FLINT_AND_STEEL) {
 			serialized.put("type", "FIRE");
 		}
-
-		serialized.entrySet().removeIf(e -> !e.getKey().equalsIgnoreCase("v") && !e.getKey().equalsIgnoreCase("type") && !e.getKey().equalsIgnoreCase("damage"));
-		
+		try {
+			serialized.entrySet().removeIf(e -> !e.getKey().equalsIgnoreCase("v") && !e.getKey().equalsIgnoreCase("type") && !e.getKey().equalsIgnoreCase("damage"));
+		}
+		catch (UnsupportedOperationException ex) {}
 		SerializableItemStack serializableItemStack = new SerializableItemStack(serialized);
 		
 		if (!block) {
